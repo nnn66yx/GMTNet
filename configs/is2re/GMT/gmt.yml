@@ -1,0 +1,44 @@
+includes:
+- configs/is2re/10k/base.yml
+
+model:
+  name: GMT
+  hidden_channels: 512
+  out_emb_channels: 512
+  num_blocks: 3
+  cutoff: 6.0
+  num_radial: 6
+  num_spherical: 7
+  num_before_skip: 1
+  num_after_skip: 2
+  num_output_layers: 3
+  regress_forces: False
+  use_pbc: True
+  embed_dim: 512
+  ffn_embed_dim: 512
+  attention_heads: 32
+  blocks: 1
+  layers: 6
+  dropout: 0.0
+  attention_dropout: 0.1
+  activation_dropout: 0.0
+  num_kernel: 128
+
+# *** Important note ***
+#   The total number of gpus used for this run was 1.
+#   If the global batch size (num_gpus * batch_size) is modified
+#   the lr_milestones and warmup_steps need to be adjusted accordingly.
+
+optim:
+  batch_size: 4
+  eval_batch_size: 4
+  num_workers: 0
+  lr_initial: 0.0001
+  lr_gamma: 0.1
+  lr_milestones: # steps at which lr_initial <- lr_initial * lr_gamma
+    - 20000
+    - 40000
+    - 60000
+  warmup_steps: 10000
+  warmup_factor: 0.2
+  max_epochs: 100
